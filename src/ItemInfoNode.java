@@ -37,4 +37,9 @@ public class ItemInfoNode {
     public ItemInfoNode getPrev() {
         return prev;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-25s%-25s%-25s%-25s%.2f",item.getName(),item.getRfidTagNumber(),item.getOriginalLocation(),item.getCurrentLocation(),item.getPrice());
+    }
 }
