@@ -102,4 +102,18 @@ public class ItemList {
 
         return false;
     }
+
+    public void printAll(){
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s%", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------");
+
+        cursor = head;
+
+        while(cursor != null){
+            System.out.println(cursor.toString());
+            cursor = cursor.getNext();
+        }
+    }
+
+
 }
