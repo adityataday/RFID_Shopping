@@ -87,4 +87,19 @@ public class ItemList {
 
         }
     }
+
+    public boolean moveItem(String rfidTag, String source, String dest) {
+        cursor = head;
+
+        while (cursor != null) {
+            if (cursor.getInfo().getRfidTagNumber().equalsIgnoreCase(rfidTag) && cursor.getInfo().getCurrentLocation().equalsIgnoreCase(source)) {
+                cursor.getInfo().setCurrentLocation(dest);
+                return true;
+            } else {
+                cursor = cursor.getNext();
+            }
+        }
+
+        return false;
+    }
 }
