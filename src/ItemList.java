@@ -40,17 +40,19 @@ public class ItemList {
                         newNode.setNext(head);
                         head.setPrev(newNode);
                         head = newNode;
+                        break;
                     } else {
+                        cursor.getPrev().setNext(newNode);
                         newNode.setNext(cursor);
                         newNode.setPrev(cursor.getPrev());
                         cursor.setPrev(newNode);
-                        cursor.getPrev().setNext(newNode);
                     }
                 } else {
                     if (cursor == tail) {
                         tail.setNext(newNode);
                         newNode.setPrev(tail);
                         tail = newNode;
+                        break;
                     }
                 }
 
@@ -62,8 +64,8 @@ public class ItemList {
     }
 
     public void removeAllPurchased() {
-        System.out.printf("%-25s%-25s%-25s%-25s%-25s%", "Item Name", "RFID", "Original Location", "Current Location", "Price");
-        System.out.printf("-----------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
 
         cursor = head;
 
@@ -73,7 +75,6 @@ public class ItemList {
 
                 if (cursor == head) {
                     head = cursor.getNext();
-                    head.setPrev(null);
                 } else if (cursor == tail) {
                     tail = tail.getPrev();
                     tail.setNext(null);
@@ -103,14 +104,83 @@ public class ItemList {
         return false;
     }
 
-    public void printAll(){
-        System.out.printf("%-25s%-25s%-25s%-25s%-25s%", "Item Name", "RFID", "Original Location", "Current Location", "Price");
-        System.out.printf("-----------------------------------------------------------------------------------------------------------------");
+    public void printAll() {
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
 
         cursor = head;
 
-        while(cursor != null){
+        while (cursor != null) {
             System.out.println(cursor.toString());
+            cursor = cursor.getNext();
+        }
+    }
+
+    public void printByLocation(String location) {
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
+
+        cursor = head;
+
+        while (cursor != null) {
+            if (cursor.getInfo().getCurrentLocation().equalsIgnoreCase(location))
+                System.out.println(cursor.toString());
+            cursor = cursor.getNext();
+        }
+    }
+
+    public void cleanStore() {
+        System.out.println("The following item(s) have been moved back to their original location");
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
+
+        cursor = head;
+
+        while (cursor != null) {
+            if (cursor.getInfo().getOriginalLocation().compareToIgnoreCase(cursor.getInfo().getCurrentLocation()) != 0 && !cursor.getInfo().getCurrentLocation().equalsIgnoreCase("out") && !cursor.getInfo().getCurrentLocation().startsWith("c")) {
+                System.out.println(cursor.toString());
+                cursor.getInfo().setCurrentLocation(cursor.getInfo().getOriginalLocation());
+            }
+
+            cursor = cursor.getNext();
+        }
+    }
+
+    public double checkOut(String cartNumber) throws Exception {
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
+
+        cursor = head;
+        double totalAmount = 0;
+
+        while (cursor != null) {
+            if (cursor.getInfo().getCurrentLocation().equalsIgnoreCase(cartNumber)) {
+                cursor.getInfo().setCurrentLocation("out");
+                System.out.println(cursor.toString());
+                totalAmount += cursor.getInfo().getPrice();
+            }else if(cursor == tail){
+                throw new Exception("Cart not found");
+            }
+
+            cursor = cursor.getNext();
+        }
+
+
+        return totalAmount;
+
+    }
+
+    public void printByRFID(String rfidTagNumber) {
+        System.out.printf("%-25s%-25s%-25s%-25s%-25s\n", "Item Name", "RFID", "Original Location", "Current Location", "Price");
+        System.out.printf("-----------------------------------------------------------------------------------------------------------------\n");
+
+        cursor = head;
+
+        while (cursor != null) {
+            if (cursor.getInfo().getRfidTagNumber().equalsIgnoreCase(rfidTagNumber)) {
+                System.out.println(cursor.toString());
+            }
+
             cursor = cursor.getNext();
         }
     }

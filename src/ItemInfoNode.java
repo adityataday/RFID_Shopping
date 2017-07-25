@@ -40,6 +40,6 @@ public class ItemInfoNode {
 
     @Override
     public String toString() {
-        return String.format("%-25s%-25s%-25s%-25s%.2f",item.getName(),item.getRfidTagNumber(),item.getOriginalLocation(),item.getCurrentLocation(),item.getPrice());
+        return String.format("%-25s%-25s%-25s%-25s%.2f\n",item.getName(),item.getRfidTagNumber(),item.getOriginalLocation(),item.getCurrentLocation(),item.getPrice());
     }
 }

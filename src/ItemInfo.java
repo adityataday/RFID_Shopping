@@ -3,10 +3,6 @@
  */
 
 public class ItemInfo {
-    static final int MAX_NAME = 20;
-    static final int MAX_RFID_NUM = 9;
-    static final int MAX_ORIGINAL_LOCATION = 6;
-    static final int MAX_CURRENT_LOCATION = 6;
 
     private String name;
     private Double price;
